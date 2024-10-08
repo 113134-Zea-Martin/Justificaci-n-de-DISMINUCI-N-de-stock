@@ -10,6 +10,11 @@
     </div>
   </div>
   <div class="card-body">
+    <!-- Campo de búsqueda -->
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Buscar productos" [(ngModel)]="searchTerm" (input)="filterProducts()">
+    </div>
+    
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -22,21 +27,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products">
+        <tr *ngFor="let product of filteredProducts">
           <td>{{ product.name }}</td>
           <td>{{ product.state.state }}</td>
           <td>{{ product.supplier.name }}</td>
           <td class="price-column">
-            {{
-            product.details.unit_price | currency : "USD" : "symbol" : "1.2-2"
-            }}
+            {{ product.details.unit_price | currency: 'USD':'symbol':'1.2-2' }}
           </td>
-          
           <td>
             <span data-bs-toggle="tooltip" data-bs-placement="top" [attr.title]="product.details.description">
-              {{ product.details.description.length > 50 ? 
-              (product.details.description | slice: 0:50) + '...' : 
-              product.details.description }}
+              {{ product.details.description.length > 50 ? (product.details.description | slice: 0:50) + '...' : product.details.description }}
             </span>
           </td>
           <td>
